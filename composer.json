@@ -1,0 +1,31 @@
+{
+    "name"       : "jupitern/ctt",
+    "description": "ctt (portuguese post office) mail tracker, package tracker",
+    "keywords"   : ["ctt", "mail tracker", "package tracker"],
+    "homepage"   : "https://github.com/jupitern/ctt",
+    "license"    : "MIT",
+    "authors"    : [
+        {
+            "name"    : "Nuno Chaves",
+            "email"   : "nuno.chaves@sapo.pt",
+            "role"    : "Developer"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/jupitern/ctt",
+        "issues": "https://github.com/jupitern/ctt/issues"
+    },
+    "require"    :{
+        "php":">=5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jupitern\\Ctt\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+
+        }
+    }
+}
