@@ -16,8 +16,8 @@
         "issues": "https://github.com/jupitern/ctt/issues"
     },
     "require"    :{
-        "php":">=5.6"
-        "fabpot/goutte": "3.2.*",
+        "php":">=5.6",
+        "fabpot/goutte": "3.2.*"
     },
     "autoload": {
         "psr-4": {
