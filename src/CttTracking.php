@@ -7,8 +7,7 @@ use Goutte\Client;
 
 class CttTracking
 {
-	public $debug = false;
-	public $refsPerRequest = 25;
+	public $refsPerRequest = 25; // maximum number of references per request. max allowed by ctt is 25
 	public $waitAfterRequest = 0; // seconds
 
 	const STATUS_PENDING = 1;
@@ -18,7 +17,6 @@ class CttTracking
 	const STATUS_RETURNED = 5;
 	const STATUS_UNKNOWN_OBJ = 6;
 
-	private $debugStr = '';
 	private $baseUrl = 'http://www.ctt.pt/feapl_2/app/open/objectSearch/objectSearch.jspx';
 	private $possibleStatus = [
 		'Objeto aceite' => self::STATUS_PENDING,
@@ -63,15 +61,6 @@ class CttTracking
 
 
 	/**
-	 * @return string
-	 */
-	public function getDebug()
-	{
-		return $this->debugStr;
-	}
-
-
-	/**
 	 * @param $statusCode
 	 * @return string
 	 */
@@ -90,10 +79,6 @@ class CttTracking
 	 */
 	private function makeRequest($requestRefs)
 	{
-		if ($this->debug) {
-			$this->debugStr .= "starting new request to CTT website<br/>";
-		}
-
 		$returnArr = [];
 		$client = new Client();
 		$res = $client->request('POST', $this->baseUrl, [
@@ -102,25 +87,14 @@ class CttTracking
 		]);
 
 		$res->filterXPath('//*[@id="objectSearchResult"]/table/tr')->each(function($node, $i) use(&$returnArr) {
-			$resultText = $node->text();
+			$resultText = trim($node->text());
 			if (strpos($resultText, '[+]Info') !== false) {
-
-				if ($this->debug) {
-					$this->debugStr .= "{$resultText}<br/>";
-				}
 
 				foreach ($this->possibleStatus as $statusText => $status) {
 					if (strpos($resultText, $statusText) !== false) {
-						$objRef = substr($resultText, 0, strpos($resultText, ' ')-1);
+						$objRef = trim(substr($resultText, 0, strpos($resultText, ' ')-1));
 						$returnArr[trim($objRef)] = ['status' => $status, 'statusText' => $statusText];
-						if ($this->debug) {
-							$this->debugStr .= "found ref: {$objRef} => {$statusText}";
-						}
 					}
-				}
-
-				if ($this->debug) {
-					$this->debugStr .= "<br/><br/>";
 				}
 			}
 		});
