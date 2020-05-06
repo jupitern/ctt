@@ -17,7 +17,7 @@ class CttTracking
 	const STATUS_RETURNED = 5;
 	const STATUS_UNKNOWN_OBJ = 6;
 
-	private $baseUrl = 'http://www.ctt.pt/feapl_2/app/open/objectSearch/objectSearch.jspx';
+	private $baseUrl = 'https://www.ctt.pt/feapl_2/app/open/objectSearch/objectSearch.jspx';
 	private $possibleStatus = [
 		'Objeto aceite' => self::STATUS_PENDING,
 		'Objeto expedido' => self::STATUS_IN_TRANSIT,
